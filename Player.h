@@ -7,7 +7,7 @@ using namespace std;
 
 class player{
 private: 
-    int *stats;
+    //int *stats;
     int *statsInfo;
 
 public:
@@ -43,8 +43,8 @@ public:
     int getHealth();
     int getAttack();
     int getDefense();
-    int getColumn(); //soley for while loop
-    int getRow();
+    int getColumn(); //soley for while loop, actually gets row
+    int getRow(); //actually get col
     int* getInfo();
 
 };

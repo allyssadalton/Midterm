@@ -7,8 +7,6 @@
 #include <iostream>
 #include "CandyMonsters.h"
 #include "CandyMonsters.cpp"
-//#include "Map.h"
-//#include "Map.cpp"
 #include "Player.h"
 #include "Player.cpp"
 
@@ -86,6 +84,7 @@ int main(){
     else if (coord % 3 == 2){p1.foundHazard();}
     cout << endl;
     //player 2 turn 1
+    
     cout << "Player 2, it's your turn!" << endl;
     p2.foundShop();
     cout << endl;
@@ -126,7 +125,7 @@ int main(){
         p1.increaseCoordinates(dice);
         cout << "You rolled a " << dice << "!" << endl;
         cout << endl;
-        if (coord == 9){
+        if (p1.getColumn() == 9){
             cout << "You have reached the portal to the ";
             if (p1.getRow() == 0){
                 cout << "next row, the row of the Candy Corn. However, you must defeat the Licorice Lizard first!" << endl;
@@ -136,7 +135,7 @@ int main(){
                     cout << endl << "You win!" << endl;
                 }
                 else {
-                    while (p1.getHealth() != 0 && licorice.getHealth() != 0){
+                    while (p1.getHealth() > 0 && licorice.getHealth() > 0){
                         attacklikelyhood = rand() % 10 + 1;
                         if (attacklikelyhood < p1.getAttack()){
                             cout << "You attacked the Licorice Lizard!" << endl;
@@ -169,7 +168,7 @@ int main(){
                     cout << endl << "You win!" << endl;
                 }
                 else {
-                    while (p1.getHealth() != 0 && candycorn.getHealth() != 0){
+                    while (p1.getHealth() > 0 && candycorn.getHealth() > 0){
                         attacklikelyhood = rand() % 10 + 1;
                         if (attacklikelyhood < p1.getAttack()){
                             cout << "You attacked the Candy Clown!" << endl;
@@ -202,7 +201,7 @@ int main(){
                     cout << endl << "You win!" << endl;
                 }
                 else {
-                    while (p1.getHealth() != 0 && jelly.getHealth() != 0){
+                    while (p1.getHealth() > 0 && jelly.getHealth() > 0){
                         attacklikelyhood = rand() % 10 + 1;
                         if (attacklikelyhood < p1.getAttack()){
                             cout << "You attacked the Jelly Bean Giant!" << endl;
@@ -235,7 +234,7 @@ int main(){
                     cout << endl << "You win!" << endl;
                 }
                 else {
-                    while (p1.getHealth() != 0 && lollipop.getHealth() != 0){
+                    while (p1.getHealth() > 0 && lollipop.getHealth() > 0){
                         attacklikelyhood = rand() % 10 + 1;
                         if (attacklikelyhood < p1.getAttack()){
                             cout << "You attacked the Lollipop Lalaloopsie!" << endl;
@@ -268,7 +267,7 @@ int main(){
                     cout << endl << "You win!" << endl;
                 }
                 else {
-                    while (p1.getHealth() != 0 && taffy.getHealth() != 0){
+                    while (p1.getHealth() > 0 && taffy.getHealth() > 0){
                         attacklikelyhood = rand() % 10 + 1;
                         if (attacklikelyhood < p1.getAttack()){
                             cout << "You attacked the Taffy Toddler!" << endl;
@@ -301,7 +300,7 @@ int main(){
                     cout << endl << "You win!" << endl;
                 }
                 else {
-                    while (p1.getHealth() != 0 && marshmallow.getHealth() != 0){
+                    while (p1.getHealth() > 0 && marshmallow.getHealth() > 0){
                         attacklikelyhood = rand() % 10 + 1;
                         if (attacklikelyhood < p1.getAttack()){
                             cout << "You attacked the Stay Puft Marshmallow Man!" << endl;
@@ -334,7 +333,7 @@ int main(){
                     cout << endl << "You win!" << endl;
                 }
                 else {
-                    while (p1.getHealth() != 0 && fudge.getHealth() != 0){
+                    while (p1.getHealth() > 0 && fudge.getHealth() > 0){
                         attacklikelyhood = rand() % 10 + 1;
                         if (attacklikelyhood < p1.getAttack()){
                             cout << "You attacked the Fudgenator!" << endl;
@@ -367,7 +366,7 @@ int main(){
                     cout << endl << "You win!" << endl;
                 }
                 else {
-                    while (p1.getHealth() != 0 && gummy.getHealth() != 0){
+                    while (p1.getHealth() > 0 && gummy.getHealth() > 0){
                         attacklikelyhood = rand() % 10 + 1;
                         if (attacklikelyhood < p1.getAttack()){
                             cout << "You attacked the Gummy Bear Goblin!" << endl;
@@ -400,7 +399,7 @@ int main(){
                     cout << endl << "You win!" << endl;
                 }
                 else {
-                    while (p1.getHealth() != 0 && rockcandy.getHealth() != 0){
+                    while (p1.getHealth() > 0 && rockcandy.getHealth() > 0){
                         attacklikelyhood = rand() % 10 + 1;
                         if (attacklikelyhood < p1.getAttack()){
                             cout << "You attacked the Rock Reaper!" << endl;
@@ -433,7 +432,7 @@ int main(){
                     cout << endl << "You win!" << endl;
                 }
                 else {
-                    while (p1.getHealth() != 0 && cottoncandy.getHealth() != 0){
+                    while (p1.getHealth() > 0 && cottoncandy.getHealth() > 0){
                         attacklikelyhood = rand() % 10 + 1;
                         if (attacklikelyhood < p1.getAttack()){
                             cout << "You attacked the Candyfloss Phantom!" << endl;
@@ -457,11 +456,12 @@ int main(){
                 }
                 cottoncandy.resetHealth();
             }
+            p1.setHealth(10);
         }
         if (p1.getRow() == 10){
             cout << "You have reached the Candy Castle. You must defeat the Candy Lord to take the candy crown and";
             cout << "the leader of the Candy World." << endl;
-            while (p1.getHealth() != 0 && candylord.getHealth() != 0){
+            while (p1.getHealth() > 0 && candylord.getHealth() > 0){
                 attacklikelyhood = rand() % p1.getAttack() * 2 + 1;
                     if (attacklikelyhood < p1.getAttack()){
                         cout << "You attacked the Candy Lord!" << endl;
@@ -483,9 +483,19 @@ int main(){
                 break;
             }
         }
-        else if (coord % 3 == 0){p1.foundShop();}
-        else if (coord % 3 == 1){p1.foundCoins();}
-        else if (coord % 3 == 2){p1.foundHazard();}
+        else if (p1.getColumn() % 3 == 0){p1.foundShop();}
+        else if (p1.getColumn() % 3 == 1){p1.foundCoins();}
+        else if (p1.getColumn() % 3 == 2){
+            if (p1.getHealth() > 0){
+                p1.foundHazard();
+            }
+            else{
+                cout << "You got lucky and found a health boosting potion!" << endl;
+                cout << "You now have 10 health." << endl;
+                p1.setHealth(10);
+            }
+        }
+            
         
         
         cout << "Player 2, it's your turn!" << endl;
@@ -507,7 +517,7 @@ int main(){
        p2.increaseCoordinates(dice);
        cout << "You rolled a " << dice << "!" << endl;
        cout << endl;
-       if (coord == 9){
+       if (p2.getColumn() == 9){
            cout << "You have reached the portal to the ";
            if (p2.getRow() == 0){
                cout << "next row, the row of the Candy Corn. However, you must defeat the Licorice Lizard first!" << endl;
@@ -550,7 +560,7 @@ int main(){
                    cout << endl << "You win!" << endl;
                }
                else {
-                   while (p2.getHealth() != 0 && candycorn.getHealth() != 0){
+                   while (p2.getHealth() > 0 && candycorn.getHealth() > 0){
                        attacklikelyhood = rand() % 10 + 1;
                        if (attacklikelyhood < p2.getAttack()){
                            cout << "You attacked the Candy Clown!" << endl;
@@ -583,7 +593,7 @@ int main(){
                    cout << endl << "You win!" << endl;
                }
                else {
-                   while (p2.getHealth() != 0 && jelly.getHealth() != 0){
+                   while (p2.getHealth() > 0 && jelly.getHealth() > 0){
                        attacklikelyhood = rand() % 10 + 1;
                        if (attacklikelyhood < p2.getAttack()){
                            cout << "You attacked the Jelly Bean Giant!" << endl;
@@ -616,7 +626,7 @@ int main(){
                    cout << endl << "You win!" << endl;
                }
                else {
-                   while (p2.getHealth() != 0 && lollipop.getHealth() != 0){
+                   while (p2.getHealth() > 0 && lollipop.getHealth() > 0){
                        attacklikelyhood = rand() % 10 + 1;
                        if (attacklikelyhood < p2.getAttack()){
                            cout << "You attacked the Lollipop Lalaloopsie!" << endl;
@@ -649,7 +659,7 @@ int main(){
                    cout << endl << "You win!" << endl;
                }
                else {
-                   while (p2.getHealth() != 0 && taffy.getHealth() != 0){
+                   while (p2.getHealth() > 0 && taffy.getHealth() > 0){
                        attacklikelyhood = rand() % 10 + 1;
                        if (attacklikelyhood < p2.getAttack()){
                            cout << "You attacked the Taffy Toddler!" << endl;
@@ -682,7 +692,7 @@ int main(){
                    cout << endl << "You win!" << endl;
                }
                else {
-                   while (p2.getHealth() != 0 && marshmallow.getHealth() != 0){
+                   while (p2.getHealth() > 0 && marshmallow.getHealth() > 0){
                        attacklikelyhood = rand() % 10 + 1;
                        if (attacklikelyhood < p2.getAttack()){
                            cout << "You attacked the Stay Puft Marshmallow Man!" << endl;
@@ -715,7 +725,7 @@ int main(){
                    cout << endl << "You win!" << endl;
                }
                else {
-                   while (p2.getHealth() != 0 && fudge.getHealth() != 0){
+                   while (p2.getHealth() > 0 && fudge.getHealth() > 0){
                        attacklikelyhood = rand() % 10 + 1;
                        if (attacklikelyhood < p2.getAttack()){
                            cout << "You attacked the Fudgenator!" << endl;
@@ -748,7 +758,7 @@ int main(){
                    cout << endl << "You win!" << endl;
                }
                else {
-                   while (p2.getHealth() != 0 && gummy.getHealth() != 0){
+                   while (p2.getHealth() > 0 && gummy.getHealth() > 0){
                        attacklikelyhood = rand() % 10 + 1;
                        if (attacklikelyhood < p2.getAttack()){
                            cout << "You attacked the Gummy Bear Goblin!" << endl;
@@ -781,7 +791,7 @@ int main(){
                    cout << endl << "You win!" << endl;
                }
                else {
-                   while (p2.getHealth() != 0 && rockcandy.getHealth() != 0){
+                   while (p2.getHealth() > 0 && rockcandy.getHealth() > 0){
                        attacklikelyhood = rand() % 10 + 1;
                        if (attacklikelyhood < p2.getAttack()){
                            cout << "You attacked the Rock Reaper!" << endl;
@@ -815,7 +825,7 @@ int main(){
                    cout << endl << "You win!" << endl;
                }
                else {
-                   while (p2.getHealth() != 0 && cottoncandy.getHealth() != 0){
+                   while (p2.getHealth() > 0 && cottoncandy.getHealth() > 0){
                        attacklikelyhood = rand() % 10 + 1;
                        if (attacklikelyhood < p2.getAttack()){
                            cout << "You attacked the Candyfloss Phantom!" << endl;
@@ -839,6 +849,7 @@ int main(){
                }
                cottoncandy.resetHealth();
            }
+            p1.setHealth(10);
        }
        if (p2.getRow() == 10){
             cout << "You have reached the Candy Castle. You must defeat the Candy Lord to take the candy crown and";
@@ -865,12 +876,21 @@ int main(){
                 break;
             }
         }
-       else if (coord % 3 == 0){p2.foundShop();}
-       else if (coord % 3 == 1){p2.foundCoins();}
-       else if (coord % 3 == 2){p2.foundHazard();}
+       else if (p2.getColumn() % 3 == 0){p2.foundShop();}
+       else if (p2.getColumn() % 3 == 1){p2.foundCoins();}
+       else if (p2.getColumn() % 3 == 2){
+            if (p1.getHealth() > 0){
+                p1.foundHazard();
+            }
+            else{
+                cout << "You got lucky and found a health boosting potion!" << endl;
+                cout << "You now have 10 health." << endl;
+                p1.setHealth(10);
+            }
+       }
 
-
-    } //while loop closer
+    
+    } //while loop closing bracket
 
     return 0;
 };

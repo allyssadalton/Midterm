@@ -5,13 +5,12 @@
 using namespace std;
 
 
-player::~player(){delete[] statsInfo;}
-
-
 player::player(int *stats){
     statsInfo = new int[6];
     for (int i = 0; i < 6; i++){statsInfo[i] = stats[i];}
 }
+
+player::~player(){delete[] statsInfo;}
 
 void player::displayStats(){
     cout << "Health: " << statsInfo[0] << endl;
@@ -22,8 +21,8 @@ void player::displayStats(){
 }
 
 void player::displayCoordinates(){
-    cout << "Row " << statsInfo[4] << endl;
-    cout << "Spot " << statsInfo[5] << endl;}
+    cout << "Row " << statsInfo[5] << endl;
+    cout << "Spot " << statsInfo[4] << endl;}
 
 void player::setHealth(int h){statsInfo[0] = h;}
 
@@ -256,5 +255,5 @@ void player::foundHazard(){
 int player::getHealth(){return statsInfo[0];}
 int player::getAttack(){return statsInfo[1];}
 int player::getDefense(){return statsInfo[2];}
-int player::getColumn(){return statsInfo[6];}
+int player::getColumn(){return statsInfo[4];}
 int player::getRow(){return statsInfo[5];}
