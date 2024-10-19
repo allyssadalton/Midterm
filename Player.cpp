@@ -21,7 +21,9 @@ void player::displayStats(){
 
 }
 
-void player::displayCoordinates(){cout << "(" << statsInfo[4] << ", " << statsInfo[5] << ")" << endl;}
+void player::displayCoordinates(){
+    cout << "Row " << statsInfo[4] << endl;
+    cout << "Spot " << statsInfo[5] << endl;}
 
 void player::setHealth(int h){statsInfo[0] = h;}
 
@@ -74,6 +76,7 @@ void player::foundShop(){
     displayStats();
     cout << "Would you like to upgrade your stats?(Y/N) " << endl;
     cin >> response;
+    cout << endl;
     //if they want to upgrade
     if (response == 'Y' || response == 'y'){
         //ATTACK UPGRADE
@@ -82,6 +85,7 @@ void player::foundShop(){
         cout << "Please type a digit. If you don't want to upgrade, type 0" << endl;
         while (true) { //while loop incase they choose too big of upgrade.
             cin >> attackupgrade;
+            cout << endl;
             cost = 0; //this will be reused to calculate the cost of each upgrade
             if (attackupgrade != 0){
                 cout << "It will cost ";
@@ -95,6 +99,7 @@ void player::foundShop(){
                     cout << cost << " coins. Would you like to upgrade your attack level to ";
                     cout << newattack << " still?(Y/N) " << endl;;
                     cin >> response;
+                    cout << endl;
                     if (response == 'Y' || response == 'y'){
                         increaseAttack(newattack);
                         decreaseCoins(cost);
@@ -118,6 +123,7 @@ void player::foundShop(){
         cout << "Please type a digit. If you don't want to upgrade, type 0" << endl;
         while (true){ //while loop incase they choose too big of upgrade.
             cin >> defenseupgrade;
+            cout << endl;
             cost = 0; //this will be reused to calculate the cost of each upgrade
             if (defenseupgrade != 0){
                 cout << "It will cost ";
@@ -129,7 +135,8 @@ void player::foundShop(){
                 }
                 else{
                     cout << cost << " coins. Would you like to upgrade your defense level to ";
-                    cout << newdefense << " still?(Y/N) " << endl;;
+                    cout << newdefense << " still?(Y/N) " << endl;
+                    cout << endl;
                     cin >> response;
                     if (response == 'Y' || response == 'y'){
                         increaseDefense(newdefense);
@@ -249,5 +256,5 @@ void player::foundHazard(){
 int player::getHealth(){return statsInfo[0];}
 int player::getAttack(){return statsInfo[1];}
 int player::getDefense(){return statsInfo[2];}
-int player::getCoordinates(){return statsInfo[4];}
+int player::getColumn(){return statsInfo[6];}
 int player::getRow(){return statsInfo[5];}

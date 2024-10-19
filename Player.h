@@ -43,7 +43,7 @@ public:
     int getHealth();
     int getAttack();
     int getDefense();
-    int getCoordinates(); //soley for while loop
+    int getColumn(); //soley for while loop
     int getRow();
     int* getInfo();
 

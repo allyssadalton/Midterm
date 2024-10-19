@@ -7,8 +7,8 @@
 #include <iostream>
 #include "CandyMonsters.h"
 #include "CandyMonsters.cpp"
-#include "Map.h"
-#include "Map.cpp"
+//#include "Map.h"
+//#include "Map.cpp"
 #include "Player.h"
 #include "Player.cpp"
 
@@ -64,29 +64,37 @@ int main(){
     //first turn
     cout << "Here are Player 1's stats: " << endl;
     p1.displayStats();
-    cout << endl << endl;
+    cout << endl;
     cout << "Here are Player 2's stats: " << endl;
     p2.displayStats();
+    cout << endl;
 
     //player 1 turn 1 
+    cout << endl;
     cout << "Player 1, it's your turn!" << endl;
     p1.foundShop();
+    cout << endl;
+    cout << endl;
     dice = rollDice();
     cout << "You rolled a " << dice << "!" << endl;
     p1.increaseCoordinates(dice);
-    coord = p1.getCoordinates();
+    coord = p1.getColumn();
+    cout << endl;
     //checks position for S C or H
     if (coord % 3 == 0){p1.foundShop();}
     else if (coord % 3 == 1){p1.foundCoins();}
     else if (coord % 3 == 2){p1.foundHazard();}
-
+    cout << endl;
     //player 2 turn 1
     cout << "Player 2, it's your turn!" << endl;
     p2.foundShop();
+    cout << endl;
+    cout << endl;
     dice = rollDice();
     cout << "You rolled a " << dice << "!" << endl;
     p2.increaseCoordinates(dice);
-    coord = p2.getCoordinates();
+    coord = p2.getColumn();
+    cout << endl;
     //checks position for S C or H
     if (coord % 3 == 0){p2.foundShop();}
     else if (coord % 3 == 1){p2.foundCoins();}
@@ -96,10 +104,28 @@ int main(){
     //actual game play
     while (true){
         int dice;
+        char yn;
         int attacklikelyhood;
+        cout << endl;
         cout << "Player 1, it's your turn!" << endl;
+        cout << "Would you like to see your stats?(Y/N) " << endl;
+        cin >> yn;
+        if (yn == 'Y' || yn == 'y'){
+            p1.displayStats();
+            p1.displayCoordinates();
+            cout << endl;
+        }
+        else if (yn == 'N' || yn == 'n'){cout << "Okay!";}
+        else {
+            cout << "Please type Y or N next time. Here are your stats anyways" << endl;
+            p1.displayStats();
+            p1.displayCoordinates();
+            cout << endl;
+        }
         dice = rollDice();
+        p1.increaseCoordinates(dice);
         cout << "You rolled a " << dice << "!" << endl;
+        cout << endl;
         if (coord == 9){
             cout << "You have reached the portal to the ";
             if (p1.getRow() == 0){
@@ -432,12 +458,419 @@ int main(){
                 cottoncandy.resetHealth();
             }
         }
+        if (p1.getRow() == 10){
+            cout << "You have reached the Candy Castle. You must defeat the Candy Lord to take the candy crown and";
+            cout << "the leader of the Candy World." << endl;
+            while (p1.getHealth() != 0 && candylord.getHealth() != 0){
+                attacklikelyhood = rand() % p1.getAttack() * 2 + 1;
+                    if (attacklikelyhood < p1.getAttack()){
+                        cout << "You attacked the Candy Lord!" << endl;
+                        candylord.decreaseHealth(p1.getAttack()/2);
+                    }
+                    else{
+                        cout << "The Candy Lord attacked you!" << endl;
+                        p1.decreaseHealth(candylord.getAttack()/2);
+                    }
+            }
+            if (p1.getHealth() == 0){
+                cout << "You lost!" << endl;
+                cout << "You have to go back to the start of the last row!" << endl;
+                candylord.resetHealth();
+                p1.setCoordinates(0, p1.getRow());
+            }
+            else{ 
+                cout << "You won the game! You are now the leader of the Candy World" << endl;
+                break;
+            }
+        }
         else if (coord % 3 == 0){p1.foundShop();}
         else if (coord % 3 == 1){p1.foundCoins();}
         else if (coord % 3 == 2){p1.foundHazard();}
         
         
-    }
+        cout << "Player 2, it's your turn!" << endl;
+        cout << "Would you like to see your stats?(Y/N) " << endl;
+        cin >> yn;
+        if (yn == 'Y' || yn == 'y'){
+            p2.displayStats();
+            p2.displayCoordinates();
+            cout << endl;
+        }
+        else if (yn == 'N' || yn == 'n'){cout << "Okay!";}
+        else {
+            cout << "Please type Y or N next time. Here are your stats anyways" << endl;
+            p2.displayStats();
+            p2.displayCoordinates();
+            cout << endl;
+        }
+       dice = rollDice();
+       p2.increaseCoordinates(dice);
+       cout << "You rolled a " << dice << "!" << endl;
+       cout << endl;
+       if (coord == 9){
+           cout << "You have reached the portal to the ";
+           if (p2.getRow() == 0){
+               cout << "next row, the row of the Candy Corn. However, you must defeat the Licorice Lizard first!" << endl;
+               licorice.displayInfo();
+               if (p2.getHealth() >= licorice.getHealth() && p2.getAttack() >= licorice.getAttack() && p2.getDefense() >= licorice.getDefense()){
+                   cout << "All of your stats are higher than the Licorice Lizards! The Licorice Lizard retreated.";
+                   cout << endl << "You win!" << endl;
+               }
+               else {
+                   while (p2.getHealth() != 0 && licorice.getHealth() != 0){
+                       attacklikelyhood = rand() % 10 + 1;
+                       if (attacklikelyhood < p2.getAttack()){
+                           cout << "You attacked the Licorice Lizard!" << endl;
+                           licorice.decreaseHealth(p2.getAttack()/2);
+                       }
+                       else{
+                           cout << "The Licorice Lizard attacked you!" << endl;
+                           p2.decreaseHealth(licorice.getAttack()/2);
+                       }
+                   }
+                   if (p2.getHealth() == 0){
+                       cout << "You lost!" << endl;
+                       cout << "You have to go back to the start of the row!" << endl;
+                       p2.setCoordinates(0, p2.getRow());
+                   }
+                   else{
+                       cout << "You won!" << endl;
+                       p2.setHealth(10);
+                       p2.increaseRow();
+                   }
+               }
+               licorice.resetHealth();
+           }
+              
+           else if (p2.getRow() == 1){
+               cout << "next row, the row of the Jelly Bean. However, you must defeat the Corn Clown first!" << endl;
+                   candycorn.displayInfo();
+               if (p2.getHealth() >= candycorn.getHealth() && p2.getAttack() >= candycorn.getAttack() && p2.getDefense() >= candycorn.getDefense()){
+                   cout << "All of your stats are higher than the Candy Clown! The Candy Clown retreated.";
+                   cout << endl << "You win!" << endl;
+               }
+               else {
+                   while (p2.getHealth() != 0 && candycorn.getHealth() != 0){
+                       attacklikelyhood = rand() % 10 + 1;
+                       if (attacklikelyhood < p2.getAttack()){
+                           cout << "You attacked the Candy Clown!" << endl;
+                               candycorn.decreaseHealth(p2.getAttack()/2);
+                       }
+                       else{
+                           cout << "The Candy Clown attacked you!" << endl;
+                           p2.decreaseHealth(candycorn.getAttack()/2);
+                       }
+                   }
+                   if (p2.getHealth() == 0){
+                       cout << "You lost!" << endl;
+                       cout << "You have to go back to the start of the row!" << endl;
+                       p2.setCoordinates(0, p2.getRow());
+                   }
+                   else{
+                       cout << "You won!" << endl;
+                       p2.setHealth(10);
+                       p2.increaseRow();
+                   }
+               }
+               candycorn.resetHealth();
+           }
+              
+           else if (p2.getRow() == 2){
+               cout << "next row, the row of the Lollipop. However, you must defeat the Jelly Bean Giant first!" << endl;
+                   jelly.displayInfo();
+               if (p2.getHealth() >= jelly.getHealth() && p2.getAttack() >= jelly.getAttack() && p2.getDefense() >= jelly.getDefense()){
+                   cout << "All of your stats are higher than the Jelly Bean Giant! The Jelly Bean Giant retreated.";
+                   cout << endl << "You win!" << endl;
+               }
+               else {
+                   while (p2.getHealth() != 0 && jelly.getHealth() != 0){
+                       attacklikelyhood = rand() % 10 + 1;
+                       if (attacklikelyhood < p2.getAttack()){
+                           cout << "You attacked the Jelly Bean Giant!" << endl;
+                               jelly.decreaseHealth(p2.getAttack()/2);
+                       }
+                       else{
+                           cout << "The Jelly Bean Giant attacked you!" << endl;
+                           p2.decreaseHealth(jelly.getAttack()/2);
+                       }
+                   }
+                   if (p2.getHealth() == 0){
+                       cout << "You lost!" << endl;
+                       cout << "You have to go back to the start of the row!" << endl;
+                       p2.setCoordinates(0, p2.getRow());
+                   }
+                   else{
+                       cout << "You won!" << endl;
+                       p2.setHealth(10);
+                       p2.increaseRow();
+                   }
+               }
+               jelly.resetHealth();
+           }
+              
+           else if (p2.getRow() == 3){
+               cout << "next row, the row of the Taffy. However, you must defeat the Lollipop Lalaloopsie first!" << endl;
+                   lollipop.displayInfo();
+               if (p2.getHealth() >= lollipop.getHealth() && p2.getAttack() >= lollipop.getAttack() && p2.getDefense() >= lollipop.getDefense()){
+                   cout << "All of your stats are higher than the Lollipop Lalaloopsie! The Lollipop Lalaloopsie retreated.";
+                   cout << endl << "You win!" << endl;
+               }
+               else {
+                   while (p2.getHealth() != 0 && lollipop.getHealth() != 0){
+                       attacklikelyhood = rand() % 10 + 1;
+                       if (attacklikelyhood < p2.getAttack()){
+                           cout << "You attacked the Lollipop Lalaloopsie!" << endl;
+                               lollipop.decreaseHealth(p2.getAttack()/2);
+                       }
+                       else{
+                           cout << "The Lollipop Lalaloopsie attacked you!" << endl;
+                           p2.decreaseHealth(lollipop.getAttack()/2);
+                       }
+                   }
+                   if (p2.getHealth() == 0){
+                       cout << "You lost!" << endl;
+                       cout << "You have to go back to the start of the row!" << endl;
+                       p2.setCoordinates(0, p2.getRow());
+                   }
+                   else{
+                       cout << "You won!" << endl;
+                       p2.setHealth(10);
+                       p2.increaseRow();
+                   }
+               }
+               lollipop.resetHealth();
+           }
+              
+           else if (p2.getRow() == 4){
+               cout << "next row, the row of the Marshmallow. However, you must defeat the Taffy Toddler first!" << endl;
+                   taffy.displayInfo();
+               if (p2.getHealth() >= taffy.getHealth() && p2.getAttack() >= taffy.getAttack() && p2.getDefense() >= taffy.getDefense()){
+                   cout << "All of your stats are higher than the Taffy Toddler! The Taffy Toddler retreated.";
+                   cout << endl << "You win!" << endl;
+               }
+               else {
+                   while (p2.getHealth() != 0 && taffy.getHealth() != 0){
+                       attacklikelyhood = rand() % 10 + 1;
+                       if (attacklikelyhood < p2.getAttack()){
+                           cout << "You attacked the Taffy Toddler!" << endl;
+                               taffy.decreaseHealth(p2.getAttack()/2);
+                       }
+                       else{
+                           cout << "The Taffy Toddler attacked you!" << endl;
+                           p2.decreaseHealth(taffy.getAttack()/2);
+                       }
+                   }
+                   if (p2.getHealth() == 0){
+                       cout << "You lost!" << endl;
+                       cout << "You have to go back to the start of the row!" << endl;
+                       p2.setCoordinates(0, p2.getRow());
+                   }
+                   else{
+                       cout << "You won!" << endl;
+                       p2.setHealth(10);
+                       p2.increaseRow();
+                   }
+               }
+               taffy.resetHealth();
+           }
+              
+           else if (p2.getRow() == 5){
+               cout << "next row, the row of the Fudge. However, you must defeat the Stay Puft Marshmallow Man first!" << endl;
+                   marshmallow.displayInfo();
+               if (p2.getHealth() >= marshmallow.getHealth() && p2.getAttack() >= marshmallow.getAttack() && p2.getDefense() >= marshmallow.getDefense()){
+                   cout << "All of your stats are higher than the Stay Puft Marshmallow Man! The Stay Puft Marshmallow Man retreated.";
+                   cout << endl << "You win!" << endl;
+               }
+               else {
+                   while (p2.getHealth() != 0 && marshmallow.getHealth() != 0){
+                       attacklikelyhood = rand() % 10 + 1;
+                       if (attacklikelyhood < p2.getAttack()){
+                           cout << "You attacked the Stay Puft Marshmallow Man!" << endl;
+                               marshmallow.decreaseHealth(p2.getAttack()/2);
+                       }
+                       else{
+                           cout << "The Stay Puft Marshmallow Man attacked you!" << endl;
+                           p2.decreaseHealth(marshmallow.getAttack()/2);
+                       }
+                   }
+                   if (p2.getHealth() == 0){
+                       cout << "You lost!" << endl;
+                       cout << "You have to go back to the start of the row!" << endl;
+                       p2.setCoordinates(0, p2.getRow());
+                   }
+                   else{
+                       cout << "You won!" << endl;
+                       p2.setHealth(10);
+                       p2.increaseRow();
+                   }
+               } 
+               marshmallow.resetHealth();
+           }
+              
+           else if (p2.getRow() == 6){
+               cout << "next row, the row of the Gummy Bear. However, you must defeat the Fudgenator first!" << endl;
+                   fudge.displayInfo();
+               if (p2.getHealth() >= fudge.getHealth() && p2.getAttack() >= fudge.getAttack() && p2.getDefense() >= fudge.getDefense()){
+                   cout << "All of your stats are higher than the Fudgenator! The Fudgenator retreated.";
+                   cout << endl << "You win!" << endl;
+               }
+               else {
+                   while (p2.getHealth() != 0 && fudge.getHealth() != 0){
+                       attacklikelyhood = rand() % 10 + 1;
+                       if (attacklikelyhood < p2.getAttack()){
+                           cout << "You attacked the Fudgenator!" << endl;
+                               fudge.decreaseHealth(p2.getAttack()/2);
+                       }
+                       else{
+                           cout << "The Fudgenator attacked you!" << endl;
+                           p2.decreaseHealth(fudge.getAttack()/2);
+                       }
+                   }
+                   if (p2.getHealth() == 0){
+                       cout << "You lost!" << endl;
+                       cout << "You have to go back to the start of the row!" << endl;
+                       p2.setCoordinates(0, p2.getRow());
+                   }
+                   else{
+                       cout << "You won!" << endl;
+                       p2.setHealth(10);
+                       p2.increaseRow();
+                   }
+               }
+               fudge.resetHealth();
+           }
+              
+           else if (p2.getRow() == 7){
+               cout << "next row, the row of the Rock Candy. However, you must defeat the Gummy Bear Goblin first!" << endl;
+                   gummy.displayInfo();
+               if (p2.getHealth() >= gummy.getHealth() && p2.getAttack() >= gummy.getAttack() && p2.getDefense() >= gummy.getDefense()){
+                   cout << "All of your stats are higher than the Gummy Bear Goblin! The Gummy Bear Goblin retreated.";
+                   cout << endl << "You win!" << endl;
+               }
+               else {
+                   while (p2.getHealth() != 0 && gummy.getHealth() != 0){
+                       attacklikelyhood = rand() % 10 + 1;
+                       if (attacklikelyhood < p2.getAttack()){
+                           cout << "You attacked the Gummy Bear Goblin!" << endl;
+                               gummy.decreaseHealth(p2.getAttack()/3);
+                       }
+                       else{
+                           cout << "The Gummy Bear Goblin attacked you!" << endl;
+                           p2.decreaseHealth(gummy.getAttack()/3);
+                       }
+                   }
+                   if (p2.getHealth() == 0){
+                       cout << "You lost!" << endl;
+                       cout << "You have to go back to the start of the row!" << endl;
+                       p2.setCoordinates(0, p2.getRow());
+                   }
+                   else{
+                       cout << "You won!" << endl;
+                       p2.setHealth(10);
+                       p2.increaseRow();
+                   }
+               }
+               gummy.resetHealth();
+           }
+              
+           else if (p2.getRow() == 8){
+               cout << "next row, the row of the Cotton Candy. However, you must defeat the Rock Reaper first!" << endl;
+                   rockcandy.displayInfo();
+               if (p2.getHealth() >= rockcandy.getHealth() && p2.getAttack() >= rockcandy.getAttack() && p2.getDefense() >= rockcandy.getDefense()){
+                   cout << "All of your stats are higher than the Rock Reaper! The Rock Reaper retreated.";
+                   cout << endl << "You win!" << endl;
+               }
+               else {
+                   while (p2.getHealth() != 0 && rockcandy.getHealth() != 0){
+                       attacklikelyhood = rand() % 10 + 1;
+                       if (attacklikelyhood < p2.getAttack()){
+                           cout << "You attacked the Rock Reaper!" << endl;
+                               rockcandy.decreaseHealth(p2.getAttack()/3);
+                       }
+                       else{
+                           cout << "The Rock Reaper attacked you!" << endl;
+                           p2.decreaseHealth(rockcandy.getAttack()/3);
+                       }
+                   }
+                   if (p2.getHealth() == 0){
+                       cout << "You lost!" << endl;
+                       cout << "You have to go back to the start of the row!" << endl;
+                       p2.setCoordinates(0, p2.getRow());
+                   }
+                   else{
+                       cout << "You won!" << endl;
+                       p2.setHealth(10);
+                       p2.increaseRow();
+                   }
+               }
+               rockcandy.resetHealth();
+           }
+
+
+           else if (p2.getRow() == 9){
+               cout << "Candy Castle! However, you must defeat the Candyfloss Phantom first!" << endl;
+                   cottoncandy.displayInfo();
+               if (p2.getHealth() >= cottoncandy.getHealth() && p2.getAttack() >= cottoncandy.getAttack() && p2.getDefense() >= cottoncandy.getDefense()){
+                   cout << "All of your stats are higher than the Candyfloss Phantom! The Candyfloss Phantom retreated.";
+                   cout << endl << "You win!" << endl;
+               }
+               else {
+                   while (p2.getHealth() != 0 && cottoncandy.getHealth() != 0){
+                       attacklikelyhood = rand() % 10 + 1;
+                       if (attacklikelyhood < p2.getAttack()){
+                           cout << "You attacked the Candyfloss Phantom!" << endl;
+                               cottoncandy.decreaseHealth(p2.getAttack()/3);
+                       }
+                       else{
+                           cout << "The Candyfloss Phantom attacked you!" << endl;
+                           p2.decreaseHealth(cottoncandy.getAttack()/3);
+                       }
+                   }
+                   if (p2.getHealth() == 0){
+                       cout << "You lost!" << endl;
+                       cout << "You have to go back to the start of the row!" << endl;
+                       p2.setCoordinates(0, p2.getRow());
+                   }
+                   else{
+                       cout << "You won!" << endl;
+                       p2.setHealth(10);
+                       p2.increaseRow();
+                   }
+               }
+               cottoncandy.resetHealth();
+           }
+       }
+       if (p2.getRow() == 10){
+            cout << "You have reached the Candy Castle. You must defeat the Candy Lord to take the candy crown and";
+            cout << "the leader of the Candy World." << endl;
+            while (p2.getHealth() != 0 && candylord.getHealth() != 0){
+                attacklikelyhood = rand() % p2.getAttack() * 2 + 1;
+                    if (attacklikelyhood < p2.getAttack()){
+                        cout << "You attacked the Candy Lord!" << endl;
+                        candylord.decreaseHealth(p2.getAttack()/2);
+                    }
+                    else{
+                        cout << "The Candy Lord attacked you!" << endl;
+                        p2.decreaseHealth(candylord.getAttack()/2);
+                    }
+            }
+            if (p2.getHealth() == 0){
+                cout << "You lost!" << endl;
+                cout << "You have to go back to the start of the last row!" << endl;
+                candylord.resetHealth();
+                p2.setCoordinates(0, p2.getRow());
+            }
+            else{ 
+                cout << "You won the game! You are now the leader of the Candy World" << endl;
+                break;
+            }
+        }
+       else if (coord % 3 == 0){p2.foundShop();}
+       else if (coord % 3 == 1){p2.foundCoins();}
+       else if (coord % 3 == 2){p2.foundHazard();}
+
+
+    } //while loop closer
 
     return 0;
 };
