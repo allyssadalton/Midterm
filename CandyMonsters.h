@@ -14,7 +14,7 @@ public:
 
     CandyMonster(string n, int h, int a, int d); //constructor
 
-    //~CandyMonster(); //destructor
+    ~CandyMonster(); //destructor
 
     void displayInfo();
 

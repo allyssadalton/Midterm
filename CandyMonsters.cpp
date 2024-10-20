@@ -10,7 +10,8 @@ CandyMonster::CandyMonster(string n, int h, int a, int d){
     attack = a;
     defense = d;
 }
-//CandyMonster::~CandyMonster(){}
+
+CandyMonster::~CandyMonster(){}
 
 void CandyMonster::displayInfo(){
     cout << endl;
@@ -21,9 +22,7 @@ void CandyMonster::displayInfo(){
     cout << endl; 
 }
 
-void CandyMonster::decreaseHealth(int h){
-    health -= h;
-}
+void CandyMonster::decreaseHealth(int h){health -= h;}
 
 void CandyMonster::resetHealth(){health = 10;}
 
