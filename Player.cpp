@@ -193,6 +193,7 @@ void player::foundHazard(){
         randomOopsies = rand() % 4 + 1; 
         cout << "You have lost " << randomOopsies << " health." << endl;
         decreaseHealth(randomOopsies);
+        if (getHealth() <= 0){setHealth(1);}
         cout << "You now have " << statsInfo[0] << " health." << endl;
     }
     else if (hazard == 2){ //this creates a hazard based on row theme
@@ -204,6 +205,7 @@ void player::foundHazard(){
         else if (statsInfo[4] == 1){
             cout << "A candy corn rainstorm just happened. You were concussed by the candy corn and lost some health.";
             decreaseHealth(1);
+            if (getHealth() <= 0){setHealth(1);}
             cout << endl << "You now have " << statsInfo[0] << " health." << endl;
         }
         else if (statsInfo[4] == 2){
@@ -215,6 +217,7 @@ void player::foundHazard(){
         else if (statsInfo[4] == 3){
             cout << "A lollipop stick tripped you and you lost some health!" << endl;
             decreaseHealth(1);
+            if (getHealth() <= 0){setHealth(1);}
             cout << "You now have " << statsInfo[0] << " health." << endl;
         }
         else if (statsInfo[4] == 4){ 
@@ -225,17 +228,20 @@ void player::foundHazard(){
         else if (statsInfo[4] == 5){
             cout << "You were pelted with marshmallows and lost some health!";
             decreaseHealth(1);
+            if (getHealth() <= 0){setHealth(1);}
             cout << endl << "You now have " << statsInfo[0] << " health." << endl;
         }
         else if (statsInfo[4] == 6){
             cout << "You experienced a fudge rainstorm. You lost some coins when your coin pouch filled with fudge.";
             decreaseCoins(statsInfo[3]/2);
+
             cout << endl << "You now have " << statsInfo[3] << " coins." << endl;
             
         }
         else if (statsInfo[4] == 7){
             cout << "A group of gummy gnomes just started a fight with you. You lost some health." << endl;
             decreaseHealth(1);
+            if (getHealth() <= 0){setHealth(1);}
             cout <<  "You now have " << statsInfo[0] << " health." << endl;
         }
         else if (statsInfo[4] == 8){
@@ -246,6 +252,7 @@ void player::foundHazard(){
         else if (statsInfo[4] == 9){
             cout << "You were tripped by cotton candy floss and lost some health!" << endl;
             decreaseHealth(1);
+            if (getHealth() <= 0){setHealth(1);}
             cout << endl << "You now have " << statsInfo[0] << " health." << endl;
         }
         
@@ -254,11 +261,13 @@ void player::foundHazard(){
         cout << "An invisible force shoved you off the path and casted a spell on you.";
         cout << endl << "You lost some attack power." << endl;
         decreaseAttack(1);
+        if (getAttack() <= 0){setAttack(1);}
         cout << "You now have " << statsInfo[1] << " attack power." << endl;
     }
     else if (hazard == 4){
         cout << "You were attacked by a ghost and lost some defense power." << endl;
         decreaseDefense(1);
+        if (getDefense() <= 0){setDefense(1);}
         cout << "You now have " << statsInfo[2] << " defense power." << endl;
     }
     else if (hazard == 5){
@@ -266,11 +275,14 @@ void player::foundHazard(){
         decreaseHealth(1);
         decreaseAttack(1);
         decreaseDefense(1);
+        if (getHealth() <= 0){setHealth(1);}
+        if (getAttack() <= 0){setAttack(1);}
+        if (getDefense() <= 0){setDefense(1);}
         cout << endl << "You now have " << statsInfo[0] << " health." << endl;
         cout << "You now have " << statsInfo[1] << " attack power." << endl;
         cout << "You now have " << statsInfo[2] << " defense power." << endl;
     }
-    //update to stack 
+
 }
 
 int player::getHealth(){return statsInfo[0];}

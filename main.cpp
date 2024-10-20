@@ -16,6 +16,8 @@
 #include "Player2Stack.cpp"
 #include "PlayerQueue.h"
 #include "PlayerQueue.cpp"
+#include "Map.h"
+#include "Map.cpp"
 
 using namespace std;
 
@@ -27,6 +29,11 @@ int main(){
     LinkedListStack1 p1stack;
     LinkedListStack2 p2stack;
 
+    cout << "Here is the map!" << endl;
+
+    Map map;
+    map.CreateMap();
+    map.DisplayMap();
     //queue
     PlayerQueue q;
     q.enqueue("Player 1");
@@ -35,6 +42,7 @@ int main(){
     //player p1;
     //player p2;
 
+    cout << endl;
     cout << "If you'd like to end the game, type 'E' at any prompt asking you if you want your stats displayed!" << endl;
     cout << endl;
     cout << endl;
@@ -64,6 +72,7 @@ int main(){
         if (!p1stack.isEmpty()){
             cout << "Do you have a saved file you want to load for the players? (Y/N) " << endl;
             cout << endl;
+            cout << endl;
             cin >> load;
         }
         else{
@@ -89,6 +98,7 @@ int main(){
             //displays stats
             cout << "Here are Player 1's stats: " << endl;
             p1.displayStats();
+            cout << endl;
             cout << endl;
             cout << "Here are Player 2's stats: " << endl;
             p2.displayStats();
@@ -162,6 +172,7 @@ int main(){
         else{
             cout << "That is an invalid response. You should type Y or N." << endl;
             cout << endl;
+            cout << endl;
             continue;
         }
     }
@@ -171,6 +182,7 @@ int main(){
         int dice;
         char yn;
         int attacklikelyhood;
+        cout << endl;
         cout << endl;
         if (!q.isEmpty()) {
             string currentPlayer = q.dequeue();
@@ -186,7 +198,7 @@ int main(){
         if (yn == 'Y' || yn == 'y'){
             p1.displayStats();
             p1.displayCoordinates();
-             cout << endl;
+            cout << endl;
             cout << endl;
         }
         else if (yn == 'N' || yn == 'n'){cout << "Okay!";}
@@ -563,7 +575,7 @@ int main(){
             p1.setHealth(10);
         }
         if (p1.getRow() == 10){
-            cout << "You have reached the Candy Castle. You must defeat the Candy Lord to take the candy crown and";
+            cout << "You have reached the Candy Castle. You must defeat the Candy Lord to take the candy crown and ";
             cout << "the leader of the Candy World." << endl;
             while (p1.getHealth() > 0 && candylord.getHealth() > 0){
                 attacklikelyhood = rand() % p1.getAttack() * 2 + 1;
@@ -576,14 +588,15 @@ int main(){
                         p1.decreaseHealth(candylord.getAttack()/2);
                     }
             }
-            if (p1.getHealth() == 0){
+            if (p1.getHealth() <= 0){
                 cout << "You lost!" << endl;
                 cout << "You have to go back to the start of the last row!" << endl;
                 candylord.resetHealth();
                 p1.setCoordinates(0, p1.getRow());
+                break;
             }
-            else{ 
-                cout << "You won the game! You are now the leader of the Candy World" << endl;
+            else if (candylord.getHealth() <= 0){ 
+                cout << "You won the game! You are now the leader of the Candy World!" << endl;
                 break;
             }
         }
@@ -997,9 +1010,9 @@ int main(){
             p1.setHealth(10);
        }
        if (p2.getRow() == 10){
-            cout << "You have reached the Candy Castle. You must defeat the Candy Lord to take the candy crown and";
+            cout << "You have reached the Candy Castle. You must defeat the Candy Lord to take the candy crown and ";
             cout << "the leader of the Candy World." << endl;
-            while (p2.getHealth() != 0 && candylord.getHealth() != 0){
+            while (p2.getHealth() > 0 && candylord.getHealth() > 0){
                 attacklikelyhood = rand() % p2.getAttack() * 2 + 1;
                     if (attacklikelyhood < p2.getAttack()){
                         cout << "You attacked the Candy Lord!" << endl;
@@ -1010,14 +1023,14 @@ int main(){
                         p2.decreaseHealth(candylord.getAttack()/2);
                     }
             }
-            if (p2.getHealth() == 0){
+            if (p2.getHealth() <= 0){
                 cout << "You lost!" << endl;
                 cout << "You have to go back to the start of the last row!" << endl;
                 candylord.resetHealth();
                 p2.setCoordinates(0, p2.getRow());
             }
-            else{ 
-                cout << "You won the game! You are now the leader of the Candy World" << endl;
+            else if (candylord.getHealth() <= 0){ 
+                cout << "You won the game! You are now the leader of the Candy World! " << endl;
                 break;
             }
         }
