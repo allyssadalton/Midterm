@@ -6,10 +6,7 @@
 #include <string>
 
 using namespace std;
-
-
 class Node2{
-    
 public:
     int value;
     Node2* next;

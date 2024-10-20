@@ -1,12 +1,10 @@
 #include "Player2Stack.h"
 
-
 // Node constructor
 Node2::Node2(int val) {
     value = val;
     next = nullptr;
 }
-
 
 // LinkedListStack constructor
 LinkedListStack2::LinkedListStack2(){

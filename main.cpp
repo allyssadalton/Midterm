@@ -26,7 +26,6 @@ int main(){
     //creates stack instances
     LinkedListStack1 p1stack;
     LinkedListStack2 p2stack;
-    //LinkedListStack2 p2stack;
 
     //player p1;
     //player p2;
@@ -76,12 +75,11 @@ int main(){
             p1.setCoordinates(stats[4],stats[5]);
 
             p2stack.loadFromFile();
-            player p2(stats);
-            p2.setHealth(stats[p2stack.pop()]);
-            p2.setAttack(stats[p2stack.pop()]);
-            p2.setDefense(stats[p2stack.pop()]);
-            p2.setCoins(stats[p2stack.pop()]);
-            p2.setCoordinates(stats[p2stack.pop()],stats[p2stack.pop()]);
+            p2.setHealth(p2stack.pop());
+            p2.setAttack(p2stack.pop());
+            p2.setDefense(p2stack.pop());
+            p2.setCoins(p2stack.pop());
+            p2.setCoordinates(p2stack.pop(),p2stack.pop());
 
             //displays stats
             cout << "Here are Player 1's stats: " << endl;
