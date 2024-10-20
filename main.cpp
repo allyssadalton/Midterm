@@ -14,18 +14,23 @@
 #include "Player1Stack.cpp"
 #include "Player2Stack.h"
 #include "Player2Stack.cpp"
+#include "PlayerQueue.h"
+#include "PlayerQueue.cpp"
 
 using namespace std;
 
 //creates random number for dice roll
-int rollDice() {
-    return rand() % 6 + 1; // Roll a 6-sided die
-}
+int rollDice() {return rand() % 6 + 1; }
 
 int main(){
     //creates stack instances
     LinkedListStack1 p1stack;
     LinkedListStack2 p2stack;
+
+    //queue
+    PlayerQueue q;
+    q.enqueue("Player 1");
+    q.enqueue("Player 2");
 
     //player p1;
     //player p2;
@@ -167,7 +172,11 @@ int main(){
         char yn;
         int attacklikelyhood;
         cout << endl;
-        cout << "Player 1, it's your turn!" << endl;
+        if (!q.isEmpty()) {
+            string currentPlayer = q.dequeue();
+            cout << currentPlayer << "'s turn!" << endl;
+            q.enqueue(currentPlayer);
+        }
         cout << endl;
         cout << "Would you like to see your stats?(Y/N) " << endl;
         cin >> yn;
@@ -599,7 +608,11 @@ int main(){
         p1stack.push(p1.getAttack());
         p1stack.push(p1.getHealth());
         
-        cout << "Player 2, it's your turn!" << endl;
+        if (!q.isEmpty()) {
+            string currentPlayer = q.dequeue();
+            cout << currentPlayer << "'s turn!" << endl;
+            q.enqueue(currentPlayer);
+        }
         cout << "Would you like to see your stats?(Y/N) " << endl;
         cin >> yn;
         if (yn == 'E' || yn == 'e'){break;}
