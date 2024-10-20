@@ -2,14 +2,14 @@
 
 // Constructor implementation
 Node3::Node3(const string& name) {
-    playerName = name;  // Initialize the playerName member variable with the provided name
-    next = nullptr;     // Set the next pointer to nullptr, indicating no next node
+    playerName = name;  
+    next = nullptr; 
 }
 
 PlayerQueue::PlayerQueue() {
-    front = nullptr; // Initialize the front pointer to nullptr
-    rear = nullptr;  // Initialize the rear pointer to nullptr
-    size = 0;       // Set the initial size of the queue to 0
+    head = nullptr; 
+    tail = nullptr;  
+    size = 0;       
 }
 
 // Destructor
@@ -21,12 +21,12 @@ PlayerQueue::~PlayerQueue() {
 void PlayerQueue::enqueue(const string& playerName) {
     Node3* newNode = new Node3(playerName);
     if (isEmpty()) {
-        front = newNode; // If queue is empty, set both front and rear to new node
-        rear = newNode;
+        head = newNode;
+        tail = newNode;
     } 
     else {
-        rear -> next = newNode;   // Link the new node at the end of the queue
-        rear = newNode;         // Update rear to the new node
+        tail -> next = newNode;   
+        tail = newNode;        
     }
     size++;
 }
@@ -34,13 +34,13 @@ void PlayerQueue::enqueue(const string& playerName) {
 // Remove a player from the queue
 string PlayerQueue::dequeue() {
     if (isEmpty()) {return "";}
-    string playerName = front -> playerName; // Get the player name from the front
-    Node3* temp = front;       // Store the current front node
-    front = front -> next;      // Move front to the next node
-    delete temp;              // Free the memory of the old front
+    string playerName = head -> playerName; 
+    Node3* temp = head;       
+    head = head -> next;    
+    delete temp;             
     size--;
-    if (isEmpty()) {rear = nullptr;} // Reset rear if the queue is empty
-    return playerName; // Return the dequeued player's name
+    if (isEmpty()) {tail = nullptr;} 
+    return playerName; 
 }
 
 // Check if the queue is empty
@@ -49,8 +49,8 @@ bool PlayerQueue::isEmpty() {return size == 0;}
 // Peek at the front player
 string PlayerQueue::peek() {
     if (isEmpty()) {return "";}
-    return front -> playerName; // Return the front player's name
+    return head -> playerName; 
 }
 
 // Get the size of the queue
-int PlayerQueue::getSize() {return size; }
+int PlayerQueue::getSize() {return size;}
