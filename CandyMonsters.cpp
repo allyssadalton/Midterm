@@ -13,10 +13,12 @@ CandyMonster::CandyMonster(string n, int h, int a, int d){
 //CandyMonster::~CandyMonster(){}
 
 void CandyMonster::displayInfo(){
+    cout << endl;
     cout << "Monster: " << name << endl;
     cout << "Health: " << health << endl;
     cout << "Attack: " << attack << endl;
     cout << "Defense: " << defense << endl;
+    cout << endl; 
 }
 
 void CandyMonster::decreaseHealth(int h){

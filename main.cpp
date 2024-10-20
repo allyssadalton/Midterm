@@ -5,10 +5,15 @@
 #include <iostream>
 #include <string>
 #include <iostream>
+#include <fstream>
 #include "CandyMonsters.h"
 #include "CandyMonsters.cpp"
 #include "Player.h"
 #include "Player.cpp"
+#include "Player1Stack.h"
+#include "Player1Stack.cpp"
+#include "Player2Stack.h"
+#include "Player2Stack.cpp"
 
 using namespace std;
 
@@ -17,9 +22,18 @@ int rollDice() {
     return rand() % 6 + 1; // Roll a 6-sided die
 }
 
-
-
 int main(){
+    //creates stack instances
+    LinkedListStack1 p1stack;
+    LinkedListStack2 p2stack;
+    //LinkedListStack2 p2stack;
+
+    //player p1;
+    //player p2;
+
+    cout << "If you'd like to end the game, type 'E' at any prompt asking you if you want your stats displayed!" << endl;
+    cout << endl;
+    cout << endl;
     //creates monsters
     CandyMonster licorice("Licorice Lizard", 10, 4, 4);
     CandyMonster candycorn("Corn Clown", 10, 5, 5);
@@ -33,73 +47,122 @@ int main(){
     CandyMonster cottoncandy("Candyfloss Phantom", 10, 13, 13);
     CandyMonster candylord("Candy Lord", 10, 15, 15);
 
-    //creates players & their stats
-    int stats[] = {10, 1, 1, 10, 0, 0};
-    player p1(stats);
-    player p2(stats);
-    p1.setHealth(10);
-    p1.setAttack(1);
-    p1.setDefense(1);
-    p1.setCoins(10);
-    p1.setCoordinates(0,0);
-    p2.setHealth(10);
-    p2.setAttack(1);
-    p2.setDefense(1);
-    p2.setCoins(10);
-    p2.setCoordinates(0,0);
-
-
-    /*
-    UPDATE STACK AND SEND TO TEXT FILE
-    ASK IF THE PLAYER WANTS TO LOAD THEIR GAME FROM THE LAST SAVED FILED
-    UPLOAD FILE TO STACK 
-    AND USE TOP OF STACK AS CURRENT PLAYER STATS
-    */
 
     int dice;
     int coord; //coordinates
-    
-    //first turn
-    cout << "Here are Player 1's stats: " << endl;
-    p1.displayStats();
-    cout << endl;
-    cout << "Here are Player 2's stats: " << endl;
-    p2.displayStats();
-    cout << endl;
+    int stats[] = {10, 1, 1, 10, 0, 0};
+    player p1(stats);
+    player p2(stats);
 
-    //player 1 turn 1 
-    cout << endl;
-    cout << "Player 1, it's your turn!" << endl;
-    p1.foundShop();
-    cout << endl;
-    cout << endl;
-    dice = rollDice();
-    cout << "You rolled a " << dice << "!" << endl;
-    p1.increaseCoordinates(dice);
-    coord = p1.getColumn();
-    cout << endl;
-    //checks position for S C or H
-    if (coord % 3 == 0){p1.foundShop();}
-    else if (coord % 3 == 1){p1.foundCoins();}
-    else if (coord % 3 == 2){p1.foundHazard();}
-    cout << endl;
-    //player 2 turn 1
-    
-    cout << "Player 2, it's your turn!" << endl;
-    p2.foundShop();
-    cout << endl;
-    cout << endl;
-    dice = rollDice();
-    cout << "You rolled a " << dice << "!" << endl;
-    p2.increaseCoordinates(dice);
-    coord = p2.getColumn();
-    cout << endl;
-    //checks position for S C or H
-    if (coord % 3 == 0){p2.foundShop();}
-    else if (coord % 3 == 1){p2.foundCoins();}
-    else if (coord % 3 == 2){p2.foundHazard();}
-    
-    
+    //Asks if the player wants to load their stats
+    while (true){ //incase they give invalid response
+        char load;
+        if (!p1stack.isEmpty()){
+            cout << "Do you have a saved file you want to load for the players? (Y/N) " << endl;
+            cout << endl;
+            cin >> load;
+        }
+        else{
+            load = 'N';
+        }
+        if (load == 'Y' || load == 'y'){
+            //LOADS UP STACK
+            p1stack.loadFromFile();
+            int stats[6] = {p1stack.pop(), p1stack.pop(), p1stack.pop(), p1stack.pop(), p1stack.pop(), p1stack.pop()};
+            p1.setHealth(stats[0]);
+            p1.setAttack(stats[1]);
+            p1.setDefense(stats[2]);
+            p1.setCoins(stats[3]);
+            p1.setCoordinates(stats[4],stats[5]);
+
+            p2stack.loadFromFile();
+            player p2(stats);
+            p2.setHealth(stats[p2stack.pop()]);
+            p2.setAttack(stats[p2stack.pop()]);
+            p2.setDefense(stats[p2stack.pop()]);
+            p2.setCoins(stats[p2stack.pop()]);
+            p2.setCoordinates(stats[p2stack.pop()],stats[p2stack.pop()]);
+
+            //displays stats
+            cout << "Here are Player 1's stats: " << endl;
+            p1.displayStats();
+            cout << endl;
+            cout << "Here are Player 2's stats: " << endl;
+            p2.displayStats();
+            cout << endl;
+            cout << endl;
+            break;
+        }
+
+        else if (load == 'N' || load == 'n'){
+            //creates players & their stats
+            p1.setHealth(10);
+            p1.setAttack(1);
+            p1.setDefense(1);
+            p1.setCoins(10);
+            p1.setCoordinates(0,0);
+            p2.setHealth(10);
+            p2.setAttack(1);
+            p2.setDefense(1);
+            p2.setCoins(10);
+            p2.setCoordinates(0,0);
+
+            //displays stats 
+            cout << "Here are Player 1's stats: " << endl;
+            p1.displayStats();
+            cout << endl;
+            cout << endl;
+            cout << "Here are Player 2's stats: " << endl;
+            p2.displayStats();
+            cout << endl;
+            cout << endl;
+
+            //player 1 turn 1 
+            cout << endl;
+            cout << "Player 1, it's your turn!" << endl;
+            cout << endl;
+            p1.foundShop();
+            cout << endl;
+            cout << endl;
+            dice = rollDice();
+            cout << "You rolled a " << dice << "!" << endl;
+            p1.increaseCoordinates(dice);
+            coord = p1.getColumn();
+            cout << endl;
+            //checks position for S C or H
+            if (coord % 3 == 0){p1.foundShop();}
+            else if (coord % 3 == 1){p1.foundCoins();}
+            else if (coord % 3 == 2){p1.foundHazard();}
+            cout << endl;
+            p1stack.push(p1.getRow());
+            p1stack.push(p1.getColumn());
+            p1stack.push(p1.getDefense());
+            p1stack.push(p1.getAttack());
+            p1stack.push(p1.getHealth());
+            //player 2 turn 1
+            cout << "Player 2, it's your turn!" << endl;
+            cout << endl;
+            p2.foundShop();
+            cout << endl;
+            cout << endl;
+            dice = rollDice();
+            cout << "You rolled a " << dice << "!" << endl;
+            p2.increaseCoordinates(dice);
+            coord = p2.getColumn();
+            cout << endl;
+            //checks position for S C or H
+            if (coord % 3 == 0){p2.foundShop();}
+            else if (coord % 3 == 1){p2.foundCoins();}
+            else if (coord % 3 == 2){p2.foundHazard();}
+            break;
+        }
+        else{
+            cout << "That is an invalid response. You should type Y or N." << endl;
+            cout << endl;
+            continue;
+        }
+    }
+
     //actual game play
     while (true){
         int dice;
@@ -107,11 +170,16 @@ int main(){
         int attacklikelyhood;
         cout << endl;
         cout << "Player 1, it's your turn!" << endl;
+        cout << endl;
         cout << "Would you like to see your stats?(Y/N) " << endl;
         cin >> yn;
+        cout << endl;
+        cout << endl;
+        if (yn == 'E' || yn == 'e'){break;}
         if (yn == 'Y' || yn == 'y'){
             p1.displayStats();
             p1.displayCoordinates();
+             cout << endl;
             cout << endl;
         }
         else if (yn == 'N' || yn == 'n'){cout << "Okay!";}
@@ -120,11 +188,20 @@ int main(){
             p1.displayStats();
             p1.displayCoordinates();
             cout << endl;
+            cout << endl;
         }
-        dice = rollDice();
-        p1.increaseCoordinates(dice);
-        cout << "You rolled a " << dice << "!" << endl;
+        if (p1.getHealth() == 0){
+            cout << "Your health is 0! You have to go back to the start of the row." << endl;
+            p1.setHealth(10);
+            p1.setCoordinates(0, p1.getRow());
+        } 
+        else{
+            dice = rollDice();
+            p1.increaseCoordinates(dice);
+            cout << "You rolled a " << dice << "!" << endl;
+        }
         cout << endl;
+        
         if (p1.getColumn() == 9){
             cout << "You have reached the portal to the ";
             if (p1.getRow() == 0){
@@ -133,6 +210,8 @@ int main(){
                 if (p1.getHealth() >= licorice.getHealth() && p1.getAttack() >= licorice.getAttack() && p1.getDefense() >= licorice.getDefense()){
                     cout << "All of your stats are higher than the Licorice Lizards! The Licorice Lizard retreated.";
                     cout << endl << "You win!" << endl;
+                    p1.setHealth(10);
+                    p1.increaseRow();
                 }
                 else {
                     while (p1.getHealth() > 0 && licorice.getHealth() > 0){
@@ -166,6 +245,8 @@ int main(){
                 if (p1.getHealth() >= candycorn.getHealth() && p1.getAttack() >= candycorn.getAttack() && p1.getDefense() >= candycorn.getDefense()){
                     cout << "All of your stats are higher than the Candy Clown! The Candy Clown retreated.";
                     cout << endl << "You win!" << endl;
+                    p1.setHealth(10);
+                    p1.increaseRow();
                 }
                 else {
                     while (p1.getHealth() > 0 && candycorn.getHealth() > 0){
@@ -199,6 +280,8 @@ int main(){
                 if (p1.getHealth() >= jelly.getHealth() && p1.getAttack() >= jelly.getAttack() && p1.getDefense() >= jelly.getDefense()){
                     cout << "All of your stats are higher than the Jelly Bean Giant! The Jelly Bean Giant retreated.";
                     cout << endl << "You win!" << endl;
+                    p1.setHealth(10);
+                    p1.increaseRow();
                 }
                 else {
                     while (p1.getHealth() > 0 && jelly.getHealth() > 0){
@@ -232,6 +315,8 @@ int main(){
                 if (p1.getHealth() >= lollipop.getHealth() && p1.getAttack() >= lollipop.getAttack() && p1.getDefense() >= lollipop.getDefense()){
                     cout << "All of your stats are higher than the Lollipop Lalaloopsie! The Lollipop Lalaloopsie retreated.";
                     cout << endl << "You win!" << endl;
+                    p1.setHealth(10);
+                    p1.increaseRow();
                 }
                 else {
                     while (p1.getHealth() > 0 && lollipop.getHealth() > 0){
@@ -265,6 +350,8 @@ int main(){
                 if (p1.getHealth() >= taffy.getHealth() && p1.getAttack() >= taffy.getAttack() && p1.getDefense() >= taffy.getDefense()){
                     cout << "All of your stats are higher than the Taffy Toddler! The Taffy Toddler retreated.";
                     cout << endl << "You win!" << endl;
+                    p1.setHealth(10);
+                    p1.increaseRow();
                 }
                 else {
                     while (p1.getHealth() > 0 && taffy.getHealth() > 0){
@@ -298,6 +385,8 @@ int main(){
                 if (p1.getHealth() >= marshmallow.getHealth() && p1.getAttack() >= marshmallow.getAttack() && p1.getDefense() >= marshmallow.getDefense()){
                     cout << "All of your stats are higher than the Stay Puft Marshmallow Man! The Stay Puft Marshmallow Man retreated.";
                     cout << endl << "You win!" << endl;
+                    p1.setHealth(10);
+                    p1.increaseRow();
                 }
                 else {
                     while (p1.getHealth() > 0 && marshmallow.getHealth() > 0){
@@ -331,6 +420,8 @@ int main(){
                 if (p1.getHealth() >= fudge.getHealth() && p1.getAttack() >= fudge.getAttack() && p1.getDefense() >= fudge.getDefense()){
                     cout << "All of your stats are higher than the Fudgenator! The Fudgenator retreated.";
                     cout << endl << "You win!" << endl;
+                    p1.setHealth(10);
+                    p1.increaseRow();
                 }
                 else {
                     while (p1.getHealth() > 0 && fudge.getHealth() > 0){
@@ -364,6 +455,8 @@ int main(){
                 if (p1.getHealth() >= gummy.getHealth() && p1.getAttack() >= gummy.getAttack() && p1.getDefense() >= gummy.getDefense()){
                     cout << "All of your stats are higher than the Gummy Bear Goblin! The Gummy Bear Goblin retreated.";
                     cout << endl << "You win!" << endl;
+                    p1.setHealth(10);
+                    p1.increaseRow();
                 }
                 else {
                     while (p1.getHealth() > 0 && gummy.getHealth() > 0){
@@ -397,6 +490,8 @@ int main(){
                 if (p1.getHealth() >= rockcandy.getHealth() && p1.getAttack() >= rockcandy.getAttack() && p1.getDefense() >= rockcandy.getDefense()){
                     cout << "All of your stats are higher than the Rock Reaper! The Rock Reaper retreated.";
                     cout << endl << "You win!" << endl;
+                    p1.setHealth(10);
+                    p1.increaseRow();
                 }
                 else {
                     while (p1.getHealth() > 0 && rockcandy.getHealth() > 0){
@@ -430,6 +525,8 @@ int main(){
                 if (p1.getHealth() >= cottoncandy.getHealth() && p1.getAttack() >= cottoncandy.getAttack() && p1.getDefense() >= cottoncandy.getDefense()){
                     cout << "All of your stats are higher than the Candyfloss Phantom! The Candyfloss Phantom retreated.";
                     cout << endl << "You win!" << endl;
+                    p1.setHealth(10);
+                    p1.increaseRow();
                 }
                 else {
                     while (p1.getHealth() > 0 && cottoncandy.getHealth() > 0){
@@ -488,22 +585,30 @@ int main(){
         else if (p1.getColumn() % 3 == 2){
             if (p1.getHealth() > 0){
                 p1.foundHazard();
+                cout << endl;
             }
             else{
                 cout << "You got lucky and found a health boosting potion!" << endl;
                 cout << "You now have 10 health." << endl;
+                cout << endl;
                 p1.setHealth(10);
             }
         }
-            
-        
+        p1stack.push(p1.getRow());
+        p1stack.push(p1.getColumn());
+        p1stack.push(p1.getCoins());
+        p1stack.push(p1.getDefense());
+        p1stack.push(p1.getAttack());
+        p1stack.push(p1.getHealth());
         
         cout << "Player 2, it's your turn!" << endl;
         cout << "Would you like to see your stats?(Y/N) " << endl;
         cin >> yn;
+        if (yn == 'E' || yn == 'e'){break;}
         if (yn == 'Y' || yn == 'y'){
             p2.displayStats();
             p2.displayCoordinates();
+            cout << endl;
             cout << endl;
         }
         else if (yn == 'N' || yn == 'n'){cout << "Okay!";}
@@ -512,10 +617,18 @@ int main(){
             p2.displayStats();
             p2.displayCoordinates();
             cout << endl;
+            cout << endl;
         }
-       dice = rollDice();
-       p2.increaseCoordinates(dice);
-       cout << "You rolled a " << dice << "!" << endl;
+        if (p2.getHealth() == 0){
+            cout << "Your health is 0! You have to go back to the start of the row." << endl;
+            p2.setHealth(10);
+            p2.setCoordinates(0, p2.getRow());
+        } 
+        else{
+            dice = rollDice();
+            p2.increaseCoordinates(dice);
+            cout << "You rolled a " << dice << "!" << endl;
+        }
        cout << endl;
        if (p2.getColumn() == 9){
            cout << "You have reached the portal to the ";
@@ -525,6 +638,8 @@ int main(){
                if (p2.getHealth() >= licorice.getHealth() && p2.getAttack() >= licorice.getAttack() && p2.getDefense() >= licorice.getDefense()){
                    cout << "All of your stats are higher than the Licorice Lizards! The Licorice Lizard retreated.";
                    cout << endl << "You win!" << endl;
+                   p2.setHealth(10);
+                   p2.increaseRow();
                }
                else {
                    while (p2.getHealth() != 0 && licorice.getHealth() != 0){
@@ -558,6 +673,8 @@ int main(){
                if (p2.getHealth() >= candycorn.getHealth() && p2.getAttack() >= candycorn.getAttack() && p2.getDefense() >= candycorn.getDefense()){
                    cout << "All of your stats are higher than the Candy Clown! The Candy Clown retreated.";
                    cout << endl << "You win!" << endl;
+                   p2.setHealth(10);
+                   p2.increaseRow();
                }
                else {
                    while (p2.getHealth() > 0 && candycorn.getHealth() > 0){
@@ -591,6 +708,8 @@ int main(){
                if (p2.getHealth() >= jelly.getHealth() && p2.getAttack() >= jelly.getAttack() && p2.getDefense() >= jelly.getDefense()){
                    cout << "All of your stats are higher than the Jelly Bean Giant! The Jelly Bean Giant retreated.";
                    cout << endl << "You win!" << endl;
+                   p2.setHealth(10);
+                   p2.increaseRow();
                }
                else {
                    while (p2.getHealth() > 0 && jelly.getHealth() > 0){
@@ -624,6 +743,8 @@ int main(){
                if (p2.getHealth() >= lollipop.getHealth() && p2.getAttack() >= lollipop.getAttack() && p2.getDefense() >= lollipop.getDefense()){
                    cout << "All of your stats are higher than the Lollipop Lalaloopsie! The Lollipop Lalaloopsie retreated.";
                    cout << endl << "You win!" << endl;
+                   p2.setHealth(10);
+                   p2.increaseRow();
                }
                else {
                    while (p2.getHealth() > 0 && lollipop.getHealth() > 0){
@@ -657,6 +778,8 @@ int main(){
                if (p2.getHealth() >= taffy.getHealth() && p2.getAttack() >= taffy.getAttack() && p2.getDefense() >= taffy.getDefense()){
                    cout << "All of your stats are higher than the Taffy Toddler! The Taffy Toddler retreated.";
                    cout << endl << "You win!" << endl;
+                   p2.setHealth(10);
+                   p2.increaseRow();
                }
                else {
                    while (p2.getHealth() > 0 && taffy.getHealth() > 0){
@@ -690,6 +813,8 @@ int main(){
                if (p2.getHealth() >= marshmallow.getHealth() && p2.getAttack() >= marshmallow.getAttack() && p2.getDefense() >= marshmallow.getDefense()){
                    cout << "All of your stats are higher than the Stay Puft Marshmallow Man! The Stay Puft Marshmallow Man retreated.";
                    cout << endl << "You win!" << endl;
+                   p2.setHealth(10);
+                   p2.increaseRow();
                }
                else {
                    while (p2.getHealth() > 0 && marshmallow.getHealth() > 0){
@@ -723,6 +848,8 @@ int main(){
                if (p2.getHealth() >= fudge.getHealth() && p2.getAttack() >= fudge.getAttack() && p2.getDefense() >= fudge.getDefense()){
                    cout << "All of your stats are higher than the Fudgenator! The Fudgenator retreated.";
                    cout << endl << "You win!" << endl;
+                   p2.setHealth(10);
+                   p2.increaseRow();
                }
                else {
                    while (p2.getHealth() > 0 && fudge.getHealth() > 0){
@@ -756,7 +883,10 @@ int main(){
                if (p2.getHealth() >= gummy.getHealth() && p2.getAttack() >= gummy.getAttack() && p2.getDefense() >= gummy.getDefense()){
                    cout << "All of your stats are higher than the Gummy Bear Goblin! The Gummy Bear Goblin retreated.";
                    cout << endl << "You win!" << endl;
+                   p2.setHealth(10);
+                   p2.increaseRow();
                }
+
                else {
                    while (p2.getHealth() > 0 && gummy.getHealth() > 0){
                        attacklikelyhood = rand() % 10 + 1;
@@ -789,6 +919,8 @@ int main(){
                if (p2.getHealth() >= rockcandy.getHealth() && p2.getAttack() >= rockcandy.getAttack() && p2.getDefense() >= rockcandy.getDefense()){
                    cout << "All of your stats are higher than the Rock Reaper! The Rock Reaper retreated.";
                    cout << endl << "You win!" << endl;
+                   p2.setHealth(10);
+                   p2.increaseRow();
                }
                else {
                    while (p2.getHealth() > 0 && rockcandy.getHealth() > 0){
@@ -823,6 +955,8 @@ int main(){
                if (p2.getHealth() >= cottoncandy.getHealth() && p2.getAttack() >= cottoncandy.getAttack() && p2.getDefense() >= cottoncandy.getDefense()){
                    cout << "All of your stats are higher than the Candyfloss Phantom! The Candyfloss Phantom retreated.";
                    cout << endl << "You win!" << endl;
+                   p2.setHealth(10);
+                   p2.increaseRow();
                }
                else {
                    while (p2.getHealth() > 0 && cottoncandy.getHealth() > 0){
@@ -888,6 +1022,13 @@ int main(){
                 p1.setHealth(10);
             }
        }
+
+        p2stack.push(p2.getRow());
+        p2stack.push(p2.getColumn());
+        p2stack.push(p2.getCoins());
+        p2stack.push(p2.getDefense());
+        p2stack.push(p2.getAttack());
+        p2stack.push(p2.getHealth());
 
     
     } //while loop closing bracket

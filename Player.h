@@ -43,8 +43,9 @@ public:
     int getHealth();
     int getAttack();
     int getDefense();
-    int getColumn(); //soley for while loop, actually gets row
-    int getRow(); //actually get col
+    int getCoins();
+    int getColumn(); 
+    int getRow();
     int* getInfo();
 
 };

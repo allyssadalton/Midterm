@@ -12,6 +12,7 @@ player::player(int *stats){
 
 player::~player(){delete[] statsInfo;}
 
+
 void player::displayStats(){
     cout << "Health: " << statsInfo[0] << endl;
     cout << "Attack: " << statsInfo[1] << endl;
@@ -21,8 +22,8 @@ void player::displayStats(){
 }
 
 void player::displayCoordinates(){
-    cout << "Row " << statsInfo[5] << endl;
-    cout << "Spot " << statsInfo[4] << endl;}
+    cout << "Row " << statsInfo[5] + 1 << endl;
+    cout << "Spot " << statsInfo[4] + 1<< endl;}
 
 void player::setHealth(int h){statsInfo[0] = h;}
 
@@ -86,13 +87,24 @@ void player::foundShop(){
             cin >> attackupgrade;
             cout << endl;
             cost = 0; //this will be reused to calculate the cost of each upgrade
-            if (attackupgrade != 0){
+            if (cin.fail()){
+                cout << "That reponse was invalid. Type an integer." << endl;
+                cin.clear();
+                cin.ignore();
+            }
+            else if(attackupgrade == 0){break;}
+            else if (attackupgrade != 0){
                 cout << "It will cost ";
                 int newattack = statsInfo[1] + attackupgrade; //what their new attack level will be
                 for (int i = statsInfo[1]; i < newattack; i++){cost += i;}
                 if (cost > statsInfo[3]){
                     cout << cost << " coins. You do not have enough coins." << endl;
                     cout << "Please type a lesser amount of levels you want to upgrade your attack level. " << endl;
+                    if (cin.fail()){
+                        cout << "That reponse was invalid. Type an integer." << endl;
+                        cin.clear();
+                        cin.ignore();
+                    }
                 }
                 else{
                     cout << cost << " coins. Would you like to upgrade your attack level to ";
@@ -124,13 +136,24 @@ void player::foundShop(){
             cin >> defenseupgrade;
             cout << endl;
             cost = 0; //this will be reused to calculate the cost of each upgrade
-            if (defenseupgrade != 0){
+            if (cin.fail()){
+                cout << "That reponse was invalid. Type an integer." << endl;
+                cin.clear();
+                cin.ignore();
+            }
+            else if(defenseupgrade == 0){break;}
+            else if (defenseupgrade != 0){
                 cout << "It will cost ";
                 int  newdefense = statsInfo[2] + defenseupgrade; //what their new attack level will be
                 for (int i = statsInfo[2]; i < newdefense; i++){cost += i;}
                 if (cost > statsInfo[3]){
                     cout << cost << " coins. You do not have enough coins." << endl;
                     cout << "Please type a lesser amount of levels you want to upgrade your defense level. " << endl;
+                    if (cin.fail()){
+                        cout << "That reponse was invalid. Type an integer." << endl;
+                        cin.clear();
+                        cin.ignore();
+                    }
                 }
                 else{
                     cout << cost << " coins. Would you like to upgrade your defense level to ";
@@ -255,5 +278,6 @@ void player::foundHazard(){
 int player::getHealth(){return statsInfo[0];}
 int player::getAttack(){return statsInfo[1];}
 int player::getDefense(){return statsInfo[2];}
+int player::getCoins(){return statsInfo[3];}
 int player::getColumn(){return statsInfo[4];}
 int player::getRow(){return statsInfo[5];}
