@@ -29,6 +29,7 @@ int main(){
     LinkedListStack1 p1stack;
     LinkedListStack2 p2stack;
 
+    cout << "Conquer Candy World!" << endl;
     cout << "Here is the map!" << endl;
 
     Map map;

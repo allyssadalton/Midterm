@@ -31,4 +31,5 @@ void Map::DisplayMap(){
         cout << endl;
     }
     cout << "---------------------" << endl;
+    cout << "----Candy  Castle----" << endl;
 }
