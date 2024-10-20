@@ -53,7 +53,7 @@ int LinkedListStack2::peek() {
 
 // Save the stack to a file
 void LinkedListStack2::saveToFile() {
-    ofstream file(filename);
+    ofstream file(filename, std::ios::out);
     if (file.is_open()) {
         Node2* current = top;
         while (current) {
