@@ -4,14 +4,12 @@
 #include <ctime> 
 using namespace std;
 
-
 player::player(int *stats){
     statsInfo = new int[6];
     for (int i = 0; i < 6; i++){statsInfo[i] = stats[i];}
 }
 
 player::~player(){delete[] statsInfo;}
-
 
 void player::displayStats(){
     cout << "Health: " << statsInfo[0] << endl;
@@ -23,7 +21,7 @@ void player::displayStats(){
 
 void player::displayCoordinates(){
     cout << "Row " << statsInfo[5] + 1 << endl;
-    cout << "Spot " << statsInfo[4] + 1<< endl;}
+    cout << "Spot " << statsInfo[4] + 1 << endl;}
 
 void player::setHealth(int h){statsInfo[0] = h;}
 

@@ -13,7 +13,6 @@ public:
     int defense;
 
     CandyMonster(string n, int h, int a, int d); //constructor
-
     ~CandyMonster(); //destructor
 
     void displayInfo();
@@ -25,12 +24,8 @@ public:
     bool isDefeated();
 
     int getHealth();
-
     int getAttack();
-
     int getDefense();
-
-    
 };
 
 #endif

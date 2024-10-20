@@ -14,15 +14,11 @@ LinkedListStack1::LinkedListStack1(){
 
 // LinkedListStack destructor
 LinkedListStack1::~LinkedListStack1() {
-    while (!isEmpty()) {
-        pop();
-    }
+    while (!isEmpty()) {pop();}
 }
 
 // Check if the stack is empty
-bool LinkedListStack1::isEmpty() {
-    return top == nullptr;
-}
+bool LinkedListStack1::isEmpty() {return top == nullptr;}
 
 // Push a value onto the stack
 void LinkedListStack1::push(int value) {
@@ -45,9 +41,7 @@ int LinkedListStack1::pop() {
 
 // Peek at the top value of the stack
 int LinkedListStack1::peek() {
-    if (isEmpty()) {
-        return -1;
-    }
+    if (isEmpty()) {return -1;}
     return top -> value;
 }
 

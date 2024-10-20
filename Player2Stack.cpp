@@ -14,15 +14,11 @@ LinkedListStack2::LinkedListStack2(){
 
 // LinkedListStack destructor
 LinkedListStack2::~LinkedListStack2() {
-    while (!isEmpty()) {
-        pop();
-    }
+    while (!isEmpty()) {pop();}
 }
 
 // Check if the stack is empty
-bool LinkedListStack2::isEmpty() {
-    return top == nullptr;
-}
+bool LinkedListStack2::isEmpty() {return top == nullptr;}
 
 // Push a value onto the stack
 void LinkedListStack2::push(int value) {
@@ -45,16 +41,14 @@ int LinkedListStack2::pop() {
 
 // Peek at the top value of the stack
 int LinkedListStack2::peek() {
-    if (isEmpty()) {
-        return -1;
-    }
+    if (isEmpty()) {return -1;}
     return top -> value;
 }
 
 // Save the stack to a file
 void LinkedListStack2::saveToFile() {
     ofstream file(filename, std::ios::out);
-    if (file.is_open()) {
+    if (file.is_open()){
         Node2* current = top;
         while (current) {
             file << current -> value << endl;

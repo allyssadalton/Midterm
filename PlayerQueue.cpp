@@ -1,9 +1,4 @@
 #include "PlayerQueue.h"
-#include <iostream>
-#include <string>
-#include <queue>
-using namespace std;
-
 
 // Constructor implementation
 Node3::Node3(const string& name) {
@@ -19,9 +14,7 @@ PlayerQueue::PlayerQueue() {
 
 // Destructor
 PlayerQueue::~PlayerQueue() {
-    while (!isEmpty()) {
-        dequeue();
-    }
+    while (!isEmpty()){dequeue();}
 }
 
 // Add a player to the queue
@@ -40,9 +33,7 @@ void PlayerQueue::enqueue(const string& playerName) {
 
 // Remove a player from the queue
 string PlayerQueue::dequeue() {
-    if (isEmpty()) {
-        return ""; // Indicate an empty queue
-    }
+    if (isEmpty()) {return "";}
     string playerName = front -> playerName; // Get the player name from the front
     Node3* temp = front;       // Store the current front node
     front = front -> next;      // Move front to the next node
@@ -53,19 +44,13 @@ string PlayerQueue::dequeue() {
 }
 
 // Check if the queue is empty
-bool PlayerQueue::isEmpty() {
-    return size == 0; // Check if the queue is empty
-}
+bool PlayerQueue::isEmpty() {return size == 0;}
 
 // Peek at the front player
 string PlayerQueue::peek() {
-    if (isEmpty()) {
-        return ""; // Indicate an empty queue
-    }
+    if (isEmpty()) {return "";}
     return front -> playerName; // Return the front player's name
 }
 
 // Get the size of the queue
-int PlayerQueue::getSize() {
-    return size; // Return the size of the queue
-}
+int PlayerQueue::getSize() {return size; }

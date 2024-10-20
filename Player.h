@@ -7,7 +7,6 @@ using namespace std;
 
 class player{
 private: 
-    //int *stats;
     int *statsInfo;
 
 public:
@@ -27,7 +26,6 @@ public:
     void increaseDefense(int d);
     void increaseCoins(int c);
     void increaseCoordinates(int x);
-
     void increaseRow();
 
     void decreaseHealth(int h);

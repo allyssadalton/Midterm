@@ -6,19 +6,17 @@
 #include <string>
 
 using namespace std;
+
 class Node2{
 public:
     int value;
     Node2* next;
-
     Node2(int val);
 };
 
 class LinkedListStack2 {
 private:
     Node2* top;
-    
-
 
 public:
     LinkedListStack2();
