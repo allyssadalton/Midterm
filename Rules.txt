@@ -1,0 +1,62 @@
+Quest for Candy Crown Board Game Rules
+Objective:
+Be the first player to reach the Candy Lord in the Candy Castle and defeat him!
+
+Game Setup
+Board Layout:
+The board consists of 10 rows and 10 columns. Each row represents a different candy-themed area.
+At the end of each row, there is a portal that leads to the start of the next row.
+S = Shop
+P = Portal
+H = Random Hazard
+C = Coins 
+Starting Conditions:
+Each player starts with 10 coins, 0 defense, 0 strength, 0 attack, 0 armor, and 10 health.
+Players place their players at the starting position of Row 1.
+
+Gameplay Mechanics
+First Turn Upgrades:
+On their first turn, players may choose to pay for upgrades before rolling the dice.
+Available upgrades include:
+Attack Upgrade
+Defense Upgrade
+Rolling the Dice:
+After any upgrades, players roll a 6-sided dice and move that many spaces forward.
+If a player rolls a number that exceeds the remaining spaces to the next portal (e.g., rolling a 5 while on space 8), they cannot move past the portal.
+Entering Portals:
+To enter the portal at the end of a row, players must defeat a candy monster.
+Each row features a unique candy monster (e.g., Licorice Whip, Candy Corn Golem, Jelly Bean Beast, etc.).
+Candy Monsters:
+Each candy monster has specific stats for attack, defense, and health. 
+If all of the players stats are higher than the candy monster, they can beat it.
+A random number will be generatored. If it's below their attack, they attack the monster.
+If not, the monster attacks them.
+If one of their stats is lower, they have a lower chance of beating the monster. 
+Shops:
+Players can visit shops located along the way to spend their coins on upgrades or to refill their health.
+Upgrades include:
+Attack Upgrade
+Defense Upgrade
+Health:
+Players cannot upgrade their health. Players lose health points when defeated by a candy monster or during combat.
+If a players health depletes to 0, they are sent back the the start of the row. 
+
+Combat System
+Attacking Monsters:
+If all of the players stats are higher than the candy monster, the monster retreats.
+A random number will be generatored. If it's below their attack, they attack the monster.
+If not, the monster attacks them.
+If a player fails to defeat a monster, they lose all their health points.
+If a player’s health drops to 0, they go to the start of the current row.
+
+Winning the Game
+Reaching the Candy Castle:
+After defeating the last candy monster in Row 10, players enter the Candy Castle and face the Candy Lord.
+Defeating the Candy Lord:
+The Candy Lord will have higher stats than previous monsters. Players must strategize and utilize their upgrades and items to defeat him.
+If a player defeats the Candy Lord, they win the game!
+
+Additional Rules
+Players can choose to skip shops if they don’t wish to buy anything.
+
+Enjoy your sweet adventure in Candy Quest! May the best candy warrior win!

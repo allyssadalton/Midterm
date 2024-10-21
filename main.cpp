@@ -7,17 +7,11 @@
 #include <iostream>
 #include <fstream>
 #include "CandyMonsters.h"
-#include "CandyMonsters.cpp"
 #include "Player.h"
-#include "Player.cpp"
 #include "Player1Stack.h"
-#include "Player1Stack.cpp"
 #include "Player2Stack.h"
-#include "Player2Stack.cpp"
 #include "PlayerQueue.h"
-#include "PlayerQueue.cpp"
 #include "Map.h"
-#include "Map.cpp"
 
 using namespace std;
 
