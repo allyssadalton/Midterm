@@ -180,9 +180,11 @@ int main(){
         cout << endl;
         cout << endl;
         if (!q.isEmpty()) {
+            cout << endl;
             string currentPlayer = q.dequeue();
             cout << currentPlayer << "'s turn!" << endl;
             q.enqueue(currentPlayer);
+            cout << endl;
         }
         cout << endl;
         cout << "Would you like to see your stats?(Y/N) " << endl;
@@ -617,9 +619,11 @@ int main(){
         p1stack.push(p1.getHealth());
         
         if (!q.isEmpty()) {
+            cout << endl;
             string currentPlayer = q.dequeue();
             cout << currentPlayer << "'s turn!" << endl;
             q.enqueue(currentPlayer);
+            cout << endl;
         }
         cout << "Would you like to see your stats?(Y/N) " << endl;
         cin >> yn;
