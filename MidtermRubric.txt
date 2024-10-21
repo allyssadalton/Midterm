@@ -1,0 +1,50 @@
+Problem Statement: Custom Board Game Implementation
+You are tasked with designing and implementing a board game of your choice using C++. The game will involve at least 2 players navigating a grid-based board, collecting resources, avoiding obstacles, and achieving specific objectives to win. You are free to choose the name, theme and rules of the game, but the requirements outlined below must be followed.
+
+Game Components:
+Game Board:
+The game takes place on a board, the size and shape of which is your choosing, but there must be at least 49 squares.
+Each square must have some kind of attribute some examples are: Resource Node (e.g., treasures, power-ups), a Safe Zone (e.g., camps, rest areas), a Hazard (e.g., traps, obstacles), Market Node (buy weapons) etc.
+You must have at least 3 different types of squares
+You need to choose the shape of the board path, could be monopoly shaped, could be a chess board, settlers of catan or ticket to ride etc. You need to specify this in the rules that you write, and a map of the board game is one of the deliverables.
+Game Requirements:
+Winning Condition:
+
+The game ends when a player reaches the "goal". The "goal" or winning condition(s) are entirely up to you, but you need to specify what they are.
+The game must have an element of strategy, Parcheesi or shoots-and-ladders-type games are not allowed.
+Examples of Strategies include (but not limited to) wise use of resources, taking calculated risks, avoiding danger/hazards, and/or making the best use of upgrades etc. Elements of random events (hurricane blows your ship off course, go back 3 spaces etc.) are allowed, and even encouraged, but do not count as strategy.
+Player Movement
+
+Players control a character that moves in any number of directions. Each move takes one turn.
+Turns are managed in a round-robin fashion.
+How your player moves is otherwise entirely up to you: number of squares, portals to other parts of the board etc. There's a good chance you will need to specify the movement type in the rules.
+Program Requirements:
+Playing the Game: Your program must be able to either play the game against a human opponent OR facilitate the game between at least two players. A board game in the style of the card game Solitaire, which includes only one player are also allowed if you think you have a good idea, but I can't say that I'd recommend it.
+Error Handling: Your game should handle invalid inputs (e.g., illegal moves, trying to collect from depleted resources) gracefully and provide meaningful feedback to players.
+Game State Persistence: Implement the ability to save and load the game, allowing players to pause and resume their progress.
+User Interface: Develop a command-line interface that allows players to interact with the game by viewing the board, making moves, and checking their resources. This can be as simple as an output menu or a set of coordinates of where each player is on your board, but players should either be allowed to view the board state/status whenever they like or it should be displayed with each new turn.
+Data Structure Requirements:
+Your implementation must include and make proper use of the following data structures, not using any of these will result in a loss of 15% of your grade. But note that you are allowed to double dip. e.g. the stack can be implemented with a linked list or array:
+
+Linked List
+Array
+2D Array
+Stack
+Queue
+Implementation Notes:
+You are free to design the theme, narrative, and additional features of the game, but the core mechanics outlined must be implemented using the specified data structures.
+You are allowed to use any resources you can find including AI like programs such as ChatGPT, but you cannot talk to other people, except for your instructor, about the code.
+Deliverables:
+A map of your board
+A complete set of game rules including examples of game play.
+A program following the requirements described above.
+Note that all of the above can be included either as comments at the bottom of your code or as a separate file that you upload.
+
+Rubric:
+80%: proper execution of your game
+10%: Complete set of game rules complete with examples of game play
+10%: A map of your board
++5%: Bonus if you come up with an interesting background story for your characters and setting of your game.
+Remember that in addition to the rubric there will be 10 - 15% if your code does not meet the requirements specified above.
+
+You must use dynamic memory, not using dynamic memory will result in a 10% penalty.  Having a memory leak will be a 5% penalty.
